@@ -44,6 +44,7 @@ def libc_test(
       **kwargs: Attributes relevant for a cc_test.
     """
     deps = deps + [
+        "//libc:hdr_stdint_proxy",
         "//libc:__support_macros_config",
         "//libc:__support_libc_errno",
         "//libc:errno",
@@ -62,8 +63,7 @@ def libc_test(
         name = name,
         local_defines = local_defines + LIBC_CONFIGURE_OPTIONS,
         deps = deps,
-        # For complex floating point literals.
-        copts = copts + libc_common_copts() + ["-fext-numeric-literals"],
+        copts = copts + libc_common_copts(),
         linkstatic = 1,
         **kwargs
     )

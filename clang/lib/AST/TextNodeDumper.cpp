@@ -858,7 +858,10 @@ void TextNodeDumper::Visit(const APValue &Value, QualType Ty) {
     }
 
     ColorScope Color(OS, ShowColors, DeclNameColor);
-    OS << Value.getMemberPointerDecl()->getDeclName();
+    if (const ValueDecl *MemDecl = Value.getMemberPointerDecl())
+      OS << MemDecl->getDeclName();
+    else
+      OS << "null";
     return;
   }
   case APValue::AddrLabelDiff:
